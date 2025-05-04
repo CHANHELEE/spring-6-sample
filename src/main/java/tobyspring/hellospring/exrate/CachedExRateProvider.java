@@ -1,11 +1,16 @@
 package tobyspring.hellospring.exrate;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 import tobyspring.hellospring.payment.ExRateProvider;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Component
+@Primary
 public class CachedExRateProvider implements ExRateProvider {
 
     private final ExRateProvider exRateProvider;
@@ -14,7 +19,7 @@ public class CachedExRateProvider implements ExRateProvider {
 
     private LocalDateTime cacheExpiryTime;
 
-    public CachedExRateProvider(ExRateProvider exRateProvider) {
+    public CachedExRateProvider(@Qualifier("webApiExPrateProvider") ExRateProvider exRateProvider) {
         this.exRateProvider = exRateProvider;
     }
 
