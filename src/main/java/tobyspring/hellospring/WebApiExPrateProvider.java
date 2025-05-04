@@ -25,6 +25,7 @@ public class WebApiExPrateProvider implements ExRateProvider {
         ObjectMapper mapper = new ObjectMapper();
         ExRateData data = mapper.readValue(response, ExRateData.class);
         BigDecimal exRate = data.rates().get("KRW");
+        System.out.println("API ExRate:" + data.rates().get("KRW"));
         return exRate;
     }
 }
