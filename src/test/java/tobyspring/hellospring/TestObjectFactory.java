@@ -8,6 +8,9 @@ import tobyspring.hellospring.payment.ExRateProviderStub;
 import tobyspring.hellospring.payment.PaymentService;
 
 import java.math.BigDecimal;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
 
 @Configuration
 @ComponentScan
@@ -15,11 +18,16 @@ public class TestObjectFactory {
 
     @Bean
     public PaymentService paymentService() {
-        return new PaymentService(exRateProvider());
+        return new PaymentService(exRateProvider(), clock());
     }
 
     @Bean
     public ExRateProvider exRateProvider() {
         return new ExRateProviderStub(BigDecimal.valueOf(1_000));
+    }
+
+    @Bean
+    Clock clock() {
+        return Clock.fixed(Instant.now(), ZoneId.systemDefault());
     }
 }

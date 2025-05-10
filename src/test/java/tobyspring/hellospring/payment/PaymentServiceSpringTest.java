@@ -8,6 +8,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tobyspring.hellospring.TestObjectFactory;
 
 import java.math.BigDecimal;
+import java.time.Clock;
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,8 +23,11 @@ class PaymentServiceSpringTest {
     @Autowired
     ExRateProviderStub exRateProviderStub;
 
+    @Autowired
+    Clock clock;
+
     @Test
-    void convertedAmount() throws Exception {
+    void prepare() throws Exception {
 
         // exRate : 1000
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
@@ -30,6 +35,7 @@ class PaymentServiceSpringTest {
         assertThat(payment.getExRate()).isEqualByComparingTo(BigDecimal.valueOf(1_000));
 
         assertThat(payment.getConvertedAmount()).isEqualByComparingTo(BigDecimal.valueOf(10_000));
+        assertThat(payment.getValidUntil()).isEqualTo(LocalDateTime.now(clock).plusMinutes(30));
 
         // exRate : 500
         exRateProviderStub.setExRate(BigDecimal.valueOf(500));
@@ -38,9 +44,6 @@ class PaymentServiceSpringTest {
         assertThat(payment2.getExRate()).isEqualByComparingTo(BigDecimal.valueOf(500));
 
         assertThat(payment2.getConvertedAmount()).isEqualByComparingTo(BigDecimal.valueOf(5_000));
-
-        //원화환산 금액 유효시간
-//        assertThat(payment.getValidUntil()).isAfter(LocalDateTime.now());
-//        assertThat(payment.getValidUntil()).isBefore(LocalDateTime.now().plusMinutes(30));
+        assertThat(payment2.getValidUntil()).isEqualTo(LocalDateTime.now(clock).plusMinutes(30));
     }
 }
