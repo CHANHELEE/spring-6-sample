@@ -2,7 +2,6 @@ package tobyspring.hellospring.exrate;
 
 import tobyspring.hellospring.payment.ExRateProvider;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -19,7 +18,7 @@ public class CachedExRateProvider implements ExRateProvider {
     }
 
     @Override
-    public BigDecimal getExRate(String currency) throws IOException {
+    public BigDecimal getExRate(String currency) {
 
         if (cachedExRate == null || cacheExpiryTime.isBefore(LocalDateTime.now())) {
             cachedExRate = exRateProvider.getExRate(currency);

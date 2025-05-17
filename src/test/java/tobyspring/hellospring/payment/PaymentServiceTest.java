@@ -21,7 +21,7 @@ class PaymentServiceTest {
         testAmount(BigDecimal.valueOf(3_000), BigDecimal.valueOf(30_000));
     }
 
-    private static Payment testAmount(BigDecimal exRate, BigDecimal convertedAmount) throws IOException {
+    private static Payment testAmount(BigDecimal exRate, BigDecimal convertedAmount) {
 
         //given
         Clock fixedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
