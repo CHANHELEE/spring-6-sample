@@ -3,6 +3,7 @@ package tobyspring.hellospring;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import tobyspring.hellospring.api.ApiTemplate;
 import tobyspring.hellospring.exrate.CachedExRateProvider;
 import tobyspring.hellospring.payment.ExRateProvider;
 import tobyspring.hellospring.exrate.WebApiExPrateProvider;
@@ -26,7 +27,12 @@ public class ObjectFactory {
 
     @Bean
     public ExRateProvider exRateProvider() {
-        return new WebApiExPrateProvider();
+        return new WebApiExPrateProvider(apiTemplate());
+    }
+
+    @Bean
+    public ApiTemplate apiTemplate() {
+        return new ApiTemplate();
     }
 
     @Bean

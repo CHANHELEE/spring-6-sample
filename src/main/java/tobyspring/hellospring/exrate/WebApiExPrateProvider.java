@@ -7,11 +7,15 @@ import java.math.BigDecimal;
 
 public class WebApiExPrateProvider implements ExRateProvider {
 
-    ApiTemplate apiTemplate = new ApiTemplate();
+    private final ApiTemplate apiTemplate;
+
+    public WebApiExPrateProvider(ApiTemplate apiTemplate) {
+        this.apiTemplate = apiTemplate;
+    }
 
     @Override
     public BigDecimal getExRate(String currency) {
         String url = "https://open.er-api.com/v6/latest/" + currency;
-        return apiTemplate.getExRate(url, new HttpClientApiExecutor(), new ErApiExRateExtractor());
+        return apiTemplate.getExRate(url);
     }
 }
