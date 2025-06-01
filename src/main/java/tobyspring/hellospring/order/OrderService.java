@@ -2,6 +2,7 @@ package tobyspring.hellospring.order;
 
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 import tobyspring.hellospring.data.JpaOrderRepository;
 
@@ -12,18 +13,18 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    private final JpaTransactionManager jpaTransactionManager;
+    private final PlatformTransactionManager platformTransactionManager;
 
-    public OrderService(JpaOrderRepository orderRepository, JpaTransactionManager jpaTransactionManager) {
+    public OrderService(JpaOrderRepository orderRepository, PlatformTransactionManager platformTransactionManager) {
         this.orderRepository = orderRepository;
-        this.jpaTransactionManager = jpaTransactionManager;
+        this.platformTransactionManager = platformTransactionManager;
     }
 
 
     public Order createOrder(String no, BigDecimal total) {
         Order order = new Order(no, total);
 
-        return new TransactionTemplate(jpaTransactionManager).execute(status -> {
+        return new TransactionTemplate(platformTransactionManager).execute(status -> {
             orderRepository.save(order);
             return order;
         });
