@@ -4,19 +4,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import tobyspring.hellospring.data.JdbcOrderRepository;
 import tobyspring.hellospring.data.JpaOrderRepository;
+import tobyspring.hellospring.order.OrderRepository;
 import tobyspring.hellospring.order.OrderService;
 
 @Configuration
 @Import(DataConfig.class)
 public class OrderConfig {
     @Bean
-    public OrderService orderService(JpaTransactionManager jpaTransactionManager) {
-        return new OrderService(orderRepository(), jpaTransactionManager);
+    public OrderService orderService(PlatformTransactionManager platformTransactionManager) {
+        return new OrderService(orderRepository(), platformTransactionManager);
     }
 
     @Bean
-    public JpaOrderRepository orderRepository() {
-        return new JpaOrderRepository();
+    public OrderRepository orderRepository() {
+//        return new JpaOrderRepository();
+        return new JdbcOrderRepository();
     }
 }
