@@ -15,7 +15,7 @@ public class OrderService {
 
     private final PlatformTransactionManager platformTransactionManager;
 
-    public OrderService(JpaOrderRepository orderRepository, PlatformTransactionManager platformTransactionManager) {
+    public OrderService(OrderRepository orderRepository, PlatformTransactionManager platformTransactionManager) {
         this.orderRepository = orderRepository;
         this.platformTransactionManager = platformTransactionManager;
     }
