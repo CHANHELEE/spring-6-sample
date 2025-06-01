@@ -34,6 +34,7 @@ public class JdbcOrderRepository implements OrderRepository {
         order.setId(id);
         jdbcClient.sql(
                 " insert into orders (no,total,id) values (?,?,?)"
-        ).params(order.getNo(), order.getTotal(), order.getId());
+        ).params(order.getNo(), order.getTotal(), order.getId())
+                .update();
     }
 }
