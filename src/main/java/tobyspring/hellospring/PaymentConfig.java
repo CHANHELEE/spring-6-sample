@@ -9,14 +9,12 @@ import tobyspring.hellospring.api.ApiTemplate;
 import tobyspring.hellospring.exrate.CachedExRateProvider;
 import tobyspring.hellospring.exrate.RestTemplateExRateProvider;
 import tobyspring.hellospring.payment.ExRateProvider;
-import tobyspring.hellospring.exrate.WebApiExPrateProvider;
 import tobyspring.hellospring.payment.PaymentService;
 
 import java.time.Clock;
 
 @Configuration
-@ComponentScan
-public class ObjectFactory {
+public class PaymentConfig {
 
     @Bean
     public PaymentService paymentService() {
