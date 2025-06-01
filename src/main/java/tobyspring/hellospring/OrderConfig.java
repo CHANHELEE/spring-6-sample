@@ -10,17 +10,19 @@ import tobyspring.hellospring.data.JpaOrderRepository;
 import tobyspring.hellospring.order.OrderRepository;
 import tobyspring.hellospring.order.OrderService;
 
+import javax.sql.DataSource;
+
 @Configuration
 @Import(DataConfig.class)
 public class OrderConfig {
     @Bean
-    public OrderService orderService(PlatformTransactionManager platformTransactionManager) {
-        return new OrderService(orderRepository(), platformTransactionManager);
+    public OrderService orderService(OrderRepository orderRepository, PlatformTransactionManager platformTransactionManager) {
+        return new OrderService(orderRepository, platformTransactionManager);
     }
 
     @Bean
-    public OrderRepository orderRepository() {
+    public OrderRepository orderRepository(DataSource dataSource) {
 //        return new JpaOrderRepository();
-        return new JdbcOrderRepository();
+        return new JdbcOrderRepository(dataSource);
     }
 }
